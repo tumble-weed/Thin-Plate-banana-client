@@ -54,8 +54,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--impath',type=str,default='assets/source.png')
-    parser.add_argument('--output-path',type=str,default='result.mp4')
-    parser.add_argument('--video',type=str,default='driving.mp4')
+    parser.add_argument('--impath',type=str,default='source.png',help='name of the image file')
+    parser.add_argument('--output-path',type=str,default='result.mp4',help='save the motion transfered video as')
+    parser.add_argument('--video',type=str,default='driving.mp4',help='name of the driving video (on the banana server)')
     args = parser.parse_args()
     main(args)
