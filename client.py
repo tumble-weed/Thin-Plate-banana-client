@@ -5,7 +5,19 @@ import base64 #
 from io import BytesIO
 import skimage.io #
 from PIL import Image #
-TODO = None
+import time
+# TODO = None
+class Timer():
+    def __init__(self,name):
+        self.name = name
+    def __enter__(self,):
+        self.tic = time.time()
+        pass
+    def __exit__(self,*args,**kwargs):
+        self.toc = time.time()
+        self.elapsed = self.toc - self.tic
+        print(f'time taken for {self.name} is {self.elapsed}')
+        pass
 def encodeBase64Image(image: Image) -> str:
     # https://stackoverflow.com/questions/31826335/how-to-convert-pil-image-image-object-to-base64-string
     buffered = BytesIO()
@@ -29,7 +41,8 @@ def main(args):
     # model_inputs = {YOUR_MODEL_INPUT_JSON} # anything you want to send to your model
     #===============================================
     # RESPONSE
-    out = banana.run(api_key, model_key, model_inputs)
+    with Timer('api call'):
+        out = banana.run(api_key, model_key, model_inputs)
     model_outputs = out['modelOutputs']
     assert isinstance(model_outputs,list),f'expecting response["modelOutputs"] to be a list, found {model_outputs.__class__}'
     assert len(model_outputs) == 1, f'length of response["modelOutputs"] be 1, found {len(response["modelOutputs"])}'
